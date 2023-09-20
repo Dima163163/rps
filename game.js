@@ -1,6 +1,7 @@
 'use strict';
 (() => {
   const FIGURES_RUS = ['камень', 'ножницы', 'бумага'];
+  const FIGURES_ENG = ['rock', 'scissors', 'paper'];
 
   const getRandomIntIncInclusive = (min, max) => {
     min = Math.ceil(min);
@@ -8,67 +9,85 @@
     return Math.floor(Math.random() * (max - min + 1) + min);
   };
 
-  const getFigure = () => FIGURES_RUS[getRandomIntIncInclusive(0, 2)];
+  const getFigure = (lang) => lang[getRandomIntIncInclusive(0, 2)];
 
   const game = () => {
     const result = {
       player: 0,
       computer: 0,
     };
+    const language = prompt('Выберите язык?', 'EN');
+    const lang = language === 'EN' || language === 'ENG' ?
+      FIGURES_ENG : FIGURES_RUS;
+    const gameOver = language === 'EN' || language === 'ENG' ?
+    'Game Over' : 'Игра окончена';
+    const userPoint = language === 'EN' || language === 'ENG' ?
+    'User point' : 'Очков у пользователя';
+    const computerPoint = language === 'EN' || language === 'ENG' ?
+    'Computer point' : 'Очков у компьютера';
+    const computer = language === 'EN' || language === 'ENG' ?
+    'Computer' : 'Компьютер';
+    const user = language === 'EN' || language === 'ENG' ?
+    'User' : 'Вы';
+    const draw = language === 'EN' || language === 'ENG' ?
+    'Draw!' : 'Ничья!';
+    const victory = language === 'EN' || language === 'ENG' ?
+    'You victory!' : 'Вы победили!';
+    const defeat = language === 'EN' || language === 'ENG' ?
+    'You lost!' : 'Вы проиграли!';
     return function start() {
-      const userFigure = prompt(`камень, ножницы, бумага`, '');
-      console.log(result);
+      let userFigure;
+      if (lang === FIGURES_ENG) {
+        userFigure = prompt(`rock, scissors, paper`, '');
+      } else {
+        userFigure = prompt(`камень, ножницы, бумага`, '');
+      }
       if (userFigure === null) {
-        const action = confirm('Точно ли вы хотите выйти?');
+        let action;
+        if (lang === FIGURES_ENG) {
+          action = confirm('Are you sure you want to go out?');
+        } else {
+          action = confirm('Точно ли вы хотите выйти?');
+        }
         if (action) {
           alert(`
-          Игра окончена. \n
-          Очков у пользователя: ${result.player} \n
-          Очков у компьютера: ${result.computer}
+          ${gameOver} \n
+          ${userPoint}: ${result.player} \n
+          ${computerPoint}: ${result.computer}
           `);
+          return;
         } else {
           start();
         }
-      } else if (userFigure === '') {
-        start();
       } else {
-        const toLowerUserFigure = userFigure.toLowerCase();
-        const computerFigure = getFigure();
-
-        console.log(computerFigure, userFigure);
-        const userFigureLetter = toLowerUserFigure[0];
-        const computerFigureLetter = computerFigure[0];
-        console.log(userFigureLetter, computerFigureLetter);
-        if (userFigureLetter === 'к' &&
-          computerFigureLetter === 'н' ||
-          userFigureLetter === 'н' &&
-          computerFigureLetter === 'б' ||
-          userFigureLetter === 'б' &&
-          computerFigureLetter === 'к'
+        const computerFigure = getFigure(lang);
+        console.log(computerFigure);
+        if (userFigure.toLowerCase()[0] === computerFigure[0]) {
+          alert(`
+          ${computer}: ${computerFigure} \n
+          ${user}: ${userFigure.toLowerCase()} \n
+          ${draw}`);
+          start();
+        }
+        if (userFigure.toLowerCase()[0] === lang[0][0] &&
+          computerFigure[0] === lang[1][0] ||
+          userFigure.toLowerCase()[0] === lang[1][0] &&
+          computerFigure[0] === lang[2][0] ||
+          userFigure.toLowerCase()[0] === lang[2][0] &&
+          computerFigure[0] === lang[0][0]
         ) {
           ++result.player;
           alert(`
-          Компьютер: ${computerFigure} \n
-          Вы: ${toLowerUserFigure} \n 
-          Вы выйграли!`);
-          start();
-        } else if (userFigureLetter === 'к' &&
-          computerFigureLetter === 'б' ||
-          userFigureLetter === 'н' &&
-          computerFigureLetter === 'к' ||
-          userFigureLetter === 'б' &&
-          computerFigureLetter === 'н') {
-          ++result.computer;
-          alert(`
-          Компьютер: ${computerFigure} \n
-          Вы: ${toLowerUserFigure} \n
-          Вы проиграли!`);
+          ${computer}: ${computerFigure} \n
+          ${user}: ${userFigure.toLowerCase()} \n 
+          ${victory}`);
           start();
         } else {
+          ++result.computer;
           alert(`
-          Компьютер: ${computerFigure} \n
-          Вы: ${toLowerUserFigure} \n
-          Ничья!`);
+          ${computer}: ${computerFigure} \n
+          ${user}: ${userFigure.toLowerCase()} \n
+          ${defeat}`);
           start();
         }
       }
