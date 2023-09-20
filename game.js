@@ -37,13 +37,14 @@
     'You lost!' : 'Вы проиграли!';
     return function start() {
       let userFigure;
+      let action;
       if (lang === FIGURES_ENG) {
         userFigure = prompt(`rock, scissors, paper`, '');
       } else {
         userFigure = prompt(`камень, ножницы, бумага`, '');
       }
+      console.log(userFigure);
       if (userFigure === 'null') {
-        let action;
         if (lang === FIGURES_ENG) {
           action = confirm('Are you sure you want to go out?');
         } else {
@@ -56,40 +57,39 @@
           ${computerPoint}: ${result.computer}
           `);
           return;
-        } else {
-          start();
         }
+        return start();
       } else {
-        const computerFigure = getFigure(lang);
-        console.log(userFigure.toLowerCase()[0]);
-        console.log(computerFigure[0]);
-        if (userFigure.toLowerCase()[0] === computerFigure[0]) {
-          alert(`
-          ${computer}: ${computerFigure} \n
-          ${user}: ${userFigure.toLowerCase()} \n
-          ${draw}`);
-          start();
-        }
-        if (userFigure.toLowerCase()[0] === lang[0][0] &&
-          computerFigure[0] === lang[1][0] ||
-          userFigure.toLowerCase()[0] === lang[1][0] &&
-          computerFigure[0] === lang[2][0] ||
-          userFigure.toLowerCase()[0] === lang[2][0] &&
-          computerFigure[0] === lang[0][0]
-        ) {
-          ++result.player;
-          alert(`
-          ${computer}: ${computerFigure} \n
-          ${user}: ${userFigure.toLowerCase()} \n 
-          ${victory}`);
-          start();
-        } else {
-          ++result.computer;
-          alert(`
-          ${computer}: ${computerFigure} \n
-          ${user}: ${userFigure.toLowerCase()} \n
-          ${defeat}`);
-          start();
+        if (userFigure !== null) {
+          const computerFigure = getFigure(lang);
+          if (userFigure.toLowerCase()[0] === computerFigure[0]) {
+            alert(`
+            ${computer}: ${computerFigure} \n
+            ${user}: ${userFigure.toLowerCase()} \n
+            ${draw}`);
+            start();
+          }
+          if (userFigure.toLowerCase()[0] === lang[0][0] &&
+            computerFigure[0] === lang[1][0] ||
+            userFigure.toLowerCase()[0] === lang[1][0] &&
+            computerFigure[0] === lang[2][0] ||
+            userFigure.toLowerCase()[0] === lang[2][0] &&
+            computerFigure[0] === lang[0][0]
+          ) {
+            ++result.player;
+            alert(`
+            ${computer}: ${computerFigure} \n
+            ${user}: ${userFigure.toLowerCase()} \n 
+            ${victory}`);
+            start();
+          } else {
+            ++result.computer;
+            alert(`
+            ${computer}: ${computerFigure} \n
+            ${user}: ${userFigure.toLowerCase()} \n
+            ${defeat}`);
+            start();
+          }
         }
       }
     };
