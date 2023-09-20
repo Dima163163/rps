@@ -61,7 +61,6 @@
         }
       } else {
         const computerFigure = getFigure(lang);
-        console.log(computerFigure);
         if (userFigure.toLowerCase()[0] === computerFigure[0]) {
           alert(`
           ${computer}: ${computerFigure} \n
