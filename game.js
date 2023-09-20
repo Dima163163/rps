@@ -42,7 +42,7 @@
       } else {
         userFigure = prompt(`камень, ножницы, бумага`, '');
       }
-      if (userFigure === null) {
+      if (userFigure === 'null') {
         let action;
         if (lang === FIGURES_ENG) {
           action = confirm('Are you sure you want to go out?');
@@ -50,16 +50,19 @@
           action = confirm('Точно ли вы хотите выйти?');
         }
         if (action) {
-          return alert(`
+          alert(`
           ${gameOver} \n
           ${userPoint}: ${result.player} \n
           ${computerPoint}: ${result.computer}
           `);
+          return;
         } else {
           start();
         }
       } else {
         const computerFigure = getFigure(lang);
+        console.log(userFigure.toLowerCase()[0]);
+        console.log(computerFigure[0]);
         if (userFigure.toLowerCase()[0] === computerFigure[0]) {
           alert(`
           ${computer}: ${computerFigure} \n
