@@ -43,8 +43,7 @@
       } else {
         userFigure = prompt(`камень, ножницы, бумага`, '');
       }
-      console.log(userFigure);
-      if (userFigure === 'null') {
+      if (userFigure === null) {
         if (lang === FIGURES_ENG) {
           action = confirm('Are you sure you want to go out?');
         } else {
@@ -58,42 +57,38 @@
           `);
           return;
         }
-        return start();
       } else {
-        if (userFigure !== null) {
-          const computerFigure = getFigure(lang);
-          if (userFigure.toLowerCase()[0] === computerFigure[0]) {
-            alert(`
+        const computerFigure = getFigure(lang);
+        if (userFigure.toLowerCase()[0] === computerFigure[0]) {
+          alert(`
             ${computer}: ${computerFigure} \n
             ${user}: ${userFigure.toLowerCase()} \n
             ${draw}`);
-            start();
-          }
-          if (userFigure.toLowerCase()[0] === lang[0][0] &&
+          start();
+        }
+        if (userFigure.toLowerCase()[0] === lang[0][0] &&
             computerFigure[0] === lang[1][0] ||
             userFigure.toLowerCase()[0] === lang[1][0] &&
             computerFigure[0] === lang[2][0] ||
             userFigure.toLowerCase()[0] === lang[2][0] &&
             computerFigure[0] === lang[0][0]
-          ) {
-            ++result.player;
-            alert(`
+        ) {
+          ++result.player;
+          alert(`
             ${computer}: ${computerFigure} \n
             ${user}: ${userFigure.toLowerCase()} \n 
             ${victory}`);
-            start();
-          } else {
-            ++result.computer;
-            alert(`
+          start();
+        } else {
+          ++result.computer;
+          alert(`
             ${computer}: ${computerFigure} \n
             ${user}: ${userFigure.toLowerCase()} \n
             ${defeat}`);
-            start();
-          }
+          start();
         }
       }
     };
   };
-
   window.rockPaperScissors = game;
 })();
