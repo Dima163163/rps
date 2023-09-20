@@ -43,29 +43,8 @@
       } else {
         userFigure = prompt(`камень, ножницы, бумага`, '');
       }
-      if (userFigure === null) {
-        if (lang === FIGURES_ENG) {
-          action = confirm('Are you sure you want to go out?');
-        } else {
-          action = confirm('Точно ли вы хотите выйти?');
-        }
-        if (action) {
-          alert(`
-          ${gameOver} \n
-          ${userPoint}: ${result.player} \n
-          ${computerPoint}: ${result.computer}
-          `);
-          return;
-        }
-      } else {
+      if (typeof userFigure === 'string' && userFigure !== null) {
         const computerFigure = getFigure(lang);
-        if (userFigure.toLowerCase()[0] === computerFigure[0]) {
-          alert(`
-            ${computer}: ${computerFigure} \n
-            ${user}: ${userFigure.toLowerCase()} \n
-            ${draw}`);
-          start();
-        }
         if (userFigure.toLowerCase()[0] === lang[0][0] &&
             computerFigure[0] === lang[1][0] ||
             userFigure.toLowerCase()[0] === lang[1][0] &&
@@ -79,6 +58,12 @@
             ${user}: ${userFigure.toLowerCase()} \n 
             ${victory}`);
           start();
+        } else if (userFigure.toLowerCase()[0] === computerFigure[0]) {
+          alert(`
+            ${computer}: ${computerFigure} \n
+            ${user}: ${userFigure.toLowerCase()} \n
+            ${draw}`);
+          start();
         } else {
           ++result.computer;
           alert(`
@@ -86,6 +71,20 @@
             ${user}: ${userFigure.toLowerCase()} \n
             ${defeat}`);
           start();
+        }
+      } else {
+        if (lang === FIGURES_ENG) {
+          action = confirm('Are you sure you want to go out?');
+        } else {
+          action = confirm('Точно ли вы хотите выйти?');
+        }
+        if (action) {
+          alert(`
+          ${gameOver} \n
+          ${userPoint}: ${result.player} \n
+          ${computerPoint}: ${result.computer}
+          `);
+          return;
         }
       }
     };
