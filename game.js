@@ -50,12 +50,11 @@
           action = confirm('Точно ли вы хотите выйти?');
         }
         if (action) {
-          alert(`
+          return alert(`
           ${gameOver} \n
           ${userPoint}: ${result.player} \n
           ${computerPoint}: ${result.computer}
           `);
-          return;
         } else {
           start();
         }
