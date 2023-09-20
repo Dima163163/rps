@@ -1,8 +1,5 @@
 'use strict';
 (() => {
-  const FIGURES_RUS = ['камень', 'ножницы', 'бумага'];
-  const FIGURES_ENG = ['rock', 'scissors', 'paper'];
-
   const getRandomIntIncInclusive = (min, max) => {
     min = Math.ceil(min);
     max = Math.floor(max);
